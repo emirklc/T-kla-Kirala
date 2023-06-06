@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/history.dart';
 
+import 'navigationBar_Page.dart';
+
 
 class RentCarPage extends StatefulWidget {
   @override
@@ -53,6 +55,7 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBarWidget(),
       appBar: AppBar(
         backgroundColor: Colors.deepPurple.shade400,
         title: const Text("Rental Form"),

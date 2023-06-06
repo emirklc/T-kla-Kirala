@@ -9,7 +9,7 @@ class HistoryPage extends StatefulWidget {
   final String birthDate;
   final String tc;
 
-  HistoryPage({
+   HistoryPage({
     required this.startDate,
     required this.endDate,
     required this.name,
@@ -75,7 +75,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Soyad:",
+                    "Soy isim:",
                     style: TextStyle(
                       color: Colors.deepPurple.shade500,
                       fontWeight: FontWeight.bold,

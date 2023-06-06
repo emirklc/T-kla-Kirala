@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/animation_Page.dart';
+import 'package:flutter_application_2/home_page.dart';
 import 'package:flutter_application_2/login_page.dart';
+import 'package:flutter_application_2/tarih.dart';
 
 
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       
-      home: LoginPage(),
+      home: CarAnimationScreen(),
     );
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438549046044",
+    "project_id": "tiklakirala-61062",
+    "storage_bucket": "tiklakirala-61062.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438549046044:android:0f8cf8edde84be98fa10d9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438549046044-g3ahq0ud0qe7b8sn0ngb39fd4d8qest8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwtu_W2xP0vS0CUtVdrzGDde48cvRslSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438549046044-g3ahq0ud0qe7b8sn0ngb39fd4d8qest8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
