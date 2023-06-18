@@ -46,7 +46,7 @@ class _DetailPage extends State<DetailPage>{
           top: 100,
           left: 15,
           child: Text(
-            widget.car.make,
+            widget.car.model,
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 35, color: Colors.white),
           ),

@@ -34,7 +34,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               context, MaterialPageRoute(builder: (context) =>HomePage()))
             : value == 1
                 ? Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => HistoryPage(birthDate: '', endDate: '', name: '', startDate: '', surname: '', tc: '',)))
+                    context, MaterialPageRoute(builder: (context) => HistoryPage()))
                 : Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SettingsScreen()));
       },

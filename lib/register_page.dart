@@ -1,12 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/home_page.dart';
+import 'package:flutter_application_2/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
-  _RegisterPage createState() => _RegisterPage();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPage extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+
+  Future<void> register(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Registration successful!'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to register. Error: ${e.code}'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -25,7 +57,6 @@ class _RegisterPage extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 15.0, right: 15.0, top: 20, bottom: 0),
-                  //padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     width: screenSize.width,
                     height: screenSize.height * .088,
@@ -36,11 +67,12 @@ class _RegisterPage extends State<RegisterPage> {
                       ),
                       color: Colors.deepPurple.shade400.withOpacity(.75),
                     ),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _emailController,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.transparent,
@@ -68,7 +100,6 @@ class _RegisterPage extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 15.0, right: 15.0, top: 20, bottom: 0),
-                  //padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     width: screenSize.width,
                     height: screenSize.height * .088,
@@ -79,13 +110,14 @@ class _RegisterPage extends State<RegisterPage> {
                       ),
                       color: Colors.deepPurple.shade400.withOpacity(.75),
                     ),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _passwordController,
                       style: TextStyle(
                         color: Colors.white,
                       ),
                       cursorColor: Colors.white,
                       obscureText: true,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(
                           Icons.vpn_key,
                           color: Colors.white,
@@ -109,7 +141,6 @@ class _RegisterPage extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 15.0, right: 15.0, top: 20, bottom: 0),
-                  //padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     width: screenSize.width,
                     height: screenSize.height * .088,
@@ -120,11 +151,12 @@ class _RegisterPage extends State<RegisterPage> {
                       ),
                       color: Colors.deepPurple.shade400.withOpacity(.75),
                     ),
-                    child: const TextField(
+                    child: TextField(
+                      controller: _confirmPasswordController,
                       cursorColor: Colors.white,
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                             color: Colors.transparent,
@@ -150,17 +182,27 @@ class _RegisterPage extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(onPressed:(){ Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(),),);
+                ElevatedButton(
+                  onPressed: () {
+                    String email = _emailController.text;
+                    String password = _passwordController.text;
+                    String confirmPassword = _confirmPasswordController.text;
 
-                },
-                style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 154, 69, 197)), // butonun arka plan rengi
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // butonun metin rengi
-  ),
-                 child: Text("Kayıt ol",style: TextStyle(fontSize: 20),))
+                    if (email.isNotEmpty && password.isNotEmpty && password == confirmPassword) {
+                      register(email, password);
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 154, 69, 197)),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                  ),
+                  child: const Text(
+                    "Kayıt ol",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
               ],
             ),
           ),

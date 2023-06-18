@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/admin/admin_Login_Page.dart';
+import 'package:flutter_application_2/admin/navigation_Bar.dart';
 import 'package:flutter_application_2/animation_Page.dart';
-import 'home_page.dart';
-import 'register_page.dart';
+import '../home_page.dart';
+import '../register_page.dart';
 
-class LoginPage extends StatefulWidget {
+class AdminLoginPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _AdminLoginPageState createState() => _AdminLoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _AdminLoginPageState extends State<AdminLoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
           email: email, password: password);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CarAnimationScreen()),
+        MaterialPageRoute(builder: (context) => NavigationBarPage()),
       );
     } on FirebaseAuthException catch (e) {
       // handle error according to the error code
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             height: size.height * .5,
             width: size.width * .85,
             decoration: BoxDecoration(
-                color: Colors.deepPurple.shade400.withOpacity(.75),
+                color: Colors.pink.withOpacity(.75),
                 borderRadius: BorderRadius.all(const Radius.circular(20)),
                 boxShadow: [
                   BoxShadow(
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AdminLoginPage()),
+                                    builder: (context) => RegisterPage()),
                               );
                             }),
                       ],

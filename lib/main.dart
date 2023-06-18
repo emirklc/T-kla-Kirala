@@ -1,16 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/admin/admin_home_page.dart';
 import 'package:flutter_application_2/animation_Page.dart';
 import 'package:flutter_application_2/home_page.dart';
 import 'package:flutter_application_2/login_page.dart';
 import 'package:flutter_application_2/tarih.dart';
 
+import 'admin/add.dart';
+import 'admin/admin_Login_Page.dart';
 
 
 
 
-Future<void> main() async {
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  await Firebase.initializeApp();
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      
-      home: CarAnimationScreen(),
-    );
+       
+      home: AdminHomePage());
+    
   }
 }
 

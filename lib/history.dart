@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatefulWidget {
+ class HistoryPage extends StatefulWidget {
   
-  final String startDate;
-  final String endDate;
-  final String name;
-  final String surname;
-  final String birthDate;
-  final String tc;
+  final String? startDate;
+  final String? endDate;
+  final String? name;
+  final String? surname;
+  final String? birthDate;
+  final String? tc;
 
    HistoryPage({
-    required this.startDate,
-    required this.endDate,
-    required this.name,
-    required this.surname,
-    required this.birthDate,
-    required this.tc,
+     this.startDate,
+     this.endDate,
+     this.name,
+     this.surname,
+     this.birthDate,
+     this.tc,
   });
- 
+
   @override
   State<HistoryPage> createState() => _HistoryPageState();
 }
@@ -183,80 +183,3 @@ class _HistoryPageState extends State<HistoryPage> {
             ),),);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-import 'package:flutter/material.dart';
-
-class kayit extends StatefulWidget {
-  const kayit({Key? key}) : super(key: key);
-
-  @override
-  State<kayit> createState() => _kayitState();
-}
-
-class _kayitState extends State<kayit> {
-  @override
-
-  Widget build(BuildContext context) {
-
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    Size  screenSize = mediaQuery.size;
-    return Scaffold(
-      body:GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1),
-  itemCount: 5,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(13),
-              child: Container(
-                color: Colors.purple,
-                width: screenSize.width,
-                height: screenSize.height,
-                child: SingleChildScrollView(
-                  child: Column(),),),),
-                    
-                      
-                      
-
-    );
-  },),); }
-}*/
