@@ -1,20 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/detail_page.dart';
-
 import 'navigationBar_Page.dart';
 
 class Car {
-  
   final String model;
   final int year;
-  final String fiyat;
-  final String imagePath;
-  final String yakit;
-  final String vites;
-  final String km;
-  final String hp;
+  final int price;
+  final String imageUrl;
+  final String fuel;
+  final String gear;
+  final int km;
+  final int hp;
 
-  Car( this.model, this.year, this.fiyat, this.imagePath, this.yakit, this.vites, this.km, this.hp);
+  Car(
+    this.model,
+    this.year,
+    this.price,
+    this.imageUrl,
+    this.fuel,
+    this.gear,
+    this.km,
+    this.hp,
+  );
+
+  Car.fromDocument(DocumentSnapshot doc)
+      : model = (doc.data() as Map<String, dynamic>).containsKey('model') ? doc['model'] : '',
+        year = (doc.data() as Map<String, dynamic>).containsKey('year') ? doc['year'] : 0,
+        price = (doc.data() as Map<String, dynamic>).containsKey('price') ? doc['price'] : 0,
+        imageUrl = (doc.data() as Map<String, dynamic>).containsKey('imageUrl') ? doc['imageUrl'] : '',
+        fuel = (doc.data() as Map<String, dynamic>).containsKey('fuel') ? doc['fuel'] : '',
+        gear = (doc.data() as Map<String, dynamic>).containsKey('gear') ? doc['gear'] : '',
+        km = (doc.data() as Map<String, dynamic>).containsKey('km') ? doc['km'] : 0,
+        hp = (doc.data() as Map<String, dynamic>).containsKey('hp') ? doc['hp'] : 0;
+
+
 }
 
 class HomePage extends StatefulWidget {
@@ -25,23 +45,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Car> carList = [
-    Car("Renault Clio", 2021, "1000", "assets/images/clio.png", "Dizel", "Manuel", "45000", "95 hp"),
-    Car("Volkswagen Passat", 2019, "2000", "assets/images/passat.png", "Dizel", "Otomatik", "60000", "132 hp"),
-    Car("Peugeot 3008", 2020, "1500", "assets/images/peugeot3008.png", "Dizel", "Otomatik", "100000", "145 hp"),
-    Car("Peugeot 208", 2022, "1500", "assets/images/208.png", "Dizel", "Otomatik", "50000", "130 hp"),
-    Car("Renault Megane", 2021, "1200", "assets/images/clio.png", "Benzin", "Manuel", "120000", "90 hp"),
-    Car("Ford Focus", 2020, "1600", "assets/images/focus.png", "Dizel", "Manuel", "70000", "120 hp"),
-    Car("Opel Astra", 2018, "1800", "assets/images/astra.png", "Dizel", "Otomatik", "10000", "110 hp"),
-    Car("Jeep Cherokee", 2019, "3000", "assets/images/jeep.png", "Dizel", "Otomatik", "25000", "348 hp"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-   
-   return Scaffold(
-    bottomNavigationBar: BottomNavigationBarWidget(),
+
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBarWidget(),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,64 +71,88 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemCount: carList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset(
-                          carList[index].imagePath,
-                          height: 110,
-                          width: 120,
-                          fit: BoxFit.contain,
-                        ),
-                        Text(
-                          carList[index].model,
-                          style: const TextStyle(fontSize: 18, color: Colors.black),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          carList[index].fiyat,
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: SizedBox(
-                            height: 36,
-                            child: MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('AdminCars').snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Bir hata oluştu'),
+                  );
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                final carDocs = snapshot.data!.docs;
+                final cars = carDocs.map((doc) => Car.fromDocument(doc)).toList();
+
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                  itemCount: cars.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Image.network(
+  cars[index].imageUrl,
+  height: 110,
+  width: 120,
+  fit: BoxFit.contain,
+  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+    // You can return any widget here to display in case of error.
+    return const Center(child: Text('Error loading image'));
+  },
+),
+                            Text(
+                              cars[index].model,
+                              style: const TextStyle(fontSize: 18, color: Colors.black),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              cars[index].price.toString(),
+                              style: TextStyle(
+                                color: Colors.black,
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(carList[index]),
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: SizedBox(
+                                height: 36,
+                                child: MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                );
-                              },
-                              color: Colors.black87,
-                              child: const Text(
-                                "Kirala",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(cars[index]),
+                                      ),
+                                    );
+                                  },
+                                  color: Colors.black87,
+                                  child: const Text(
+                                    "Kirala",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 );
               },
             ),
