@@ -17,12 +17,12 @@
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CarRentalPage extends StatefulWidget {
+class AdminHomePage extends StatefulWidget {
   @override
-  _CarRentalPageState createState() => _CarRentalPageState();
+  _AdminHomePageState createState() => _AdminHomePageState();
 }
 
-class _CarRentalPageState extends State<CarRentalPage> {
+class _AdminHomePageState extends State<AdminHomePage> {
   String _pickupDate = '';
   String _returnDate = '';
   String _pickupTime = '';

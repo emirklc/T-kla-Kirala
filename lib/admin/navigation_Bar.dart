@@ -42,7 +42,7 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
       }
     else if(selectedIndex == 2)
       {
-        child = AdminSettingPage();
+        child = AdminSettingScreen();
       }
    
 
@@ -62,16 +62,16 @@ class _NavigationBarPageState extends State<NavigationBarPage> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
-            label: 'Hesapla'
+            icon: Icon(Icons.electric_car_rounded),
+            label: 'Arabalar'
         ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood_sharp),
-            label: 'Yiyecekler'
+            icon: Icon(Icons.add),
+            label: 'Ekle'
         ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Hakkında'
+            icon: Icon(Icons.account_circle),
+            label: 'Hesabım'
         ),
         
       ],
