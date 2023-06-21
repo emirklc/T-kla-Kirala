@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/navigationBar_Page.dart';
 
  class HistoryPage extends StatefulWidget {
   
@@ -27,6 +28,8 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
+           bottomNavigationBar: BottomNavigationBarWidget(),
+
       appBar: AppBar(
         backgroundColor: Colors.deepPurple.shade500,
         title: const Text(
@@ -179,7 +182,10 @@ class _HistoryPageState extends State<HistoryPage> {
                       ],
                     ),
                   ),
-                ),),
-            ),),);
+                ),
+                ),
+            ),
+            ),
+            );
   }
 }
